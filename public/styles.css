@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+  }
+  pre {
+    font-size: 1.5em;
+  }
+  .tick line {
+    stroke: #C0C0BB;
+  }
+  .tick text {
+    fill: #635F5D;
+    cursor: default;
+  }
+  .marks circle {
+    fill: #137B80;
+  }
+  .marks path {
+    /* stroke: #137B80; */
+    stroke-width: 1;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .axis-label {
+    font-size: 1em;
+    fill: #635F5D;
+  }
+  .axis-title-label {
+    font-size: 2em;
+    fill: #635F5D;
+  }
+  
