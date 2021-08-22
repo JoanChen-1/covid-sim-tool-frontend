@@ -2,8 +2,10 @@ import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography , Box } from '@material-ui/core';
 import AgeChart from './age-chart/AgeChart';
-import SymChart from './sym-chart/SymChart'
-import DiseaseStatusChart from './disease-status-chart/DiseaseStatusChart'
+import SymChart from './sym-chart/SymChart';
+import DiseaseStatusChart from './disease-status-chart/DiseaseStatusChart';
+import CountyChart from './county-chart/CountyChart'
+
 const useStyles = makeStyles((theme) =>({
     wrapper: {
         position: "relative",
@@ -50,6 +52,7 @@ export default function ResultSection(props) {
                     </Box>
                     <SymChart data={data}/>
                     <DiseaseStatusChart data={data} diseaseRatios={diseaseRatios}/>
+                    <CountyChart />
                 </div>
             </div>
         </Fragment>

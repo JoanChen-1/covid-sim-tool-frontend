@@ -1,3 +1,6 @@
+import { format } from 'd3';
+const tickFormat = format(',');
+
 export const AxisLeft = ({ yScale, innerWidth, tickOffset = 3 }) =>
   yScale.ticks().map((tickValue, id) => (
     <g 
@@ -11,7 +14,7 @@ export const AxisLeft = ({ yScale, innerWidth, tickOffset = 3 }) =>
         x={-tickOffset}
         dy=".32em"
       >
-        {tickValue}
+        {tickFormat(tickValue)}
       </text>
     </g>
   ));

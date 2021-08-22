@@ -18,6 +18,8 @@ const margin = { top: 100, right: 200, bottom: 65, left: 110 };
 const xAxisLabelOffset = 50;
 const yAxisLabelOffset = 80;
 const fadeOpacity = 0.2;
+const innerHeight = height - margin.top - margin.bottom;
+const innerWidth = width - margin.left - margin.right;
 
 export default function DiseaseStatusChart(props){
   const { data, diseaseRatios } = props;
@@ -27,8 +29,6 @@ export default function DiseaseStatusChart(props){
     return <pre></pre>;
   }
 
-  const innerHeight = height - margin.top - margin.bottom;
-  const innerWidth = width - margin.left - margin.right;
   const title = '每日重症、住院、死亡人數'
 
   const infectGp = [
