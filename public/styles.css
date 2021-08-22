@@ -13,12 +13,13 @@ body {
     fill: #635F5D;
     cursor: default;
   }
-  .marks circle {
-    fill: #137B80;
+  .tick-option text {
+    fill: #635F5D;
+    cursor: pointer;
   }
-  .marks path {
+  .stroke-line {
     /* stroke: #137B80; */
-    stroke-width: 1;
+    stroke-width: 2;
     stroke-linejoin: round;
     stroke-linecap: round;
   }

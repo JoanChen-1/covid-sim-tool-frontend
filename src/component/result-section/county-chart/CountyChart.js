@@ -4,15 +4,14 @@ import {
   scaleLinear,
   scaleOrdinal,
   extent,
-  // schemeCategory20,
-  schemeBlues,
+  schemePaired,
   descending,
   curveLinear,
   maxIndex,
 } from 'd3';
 import { AxisBottom } from '../AxisBottom';
 import { AxisLeft } from '../AxisLeft';
-import { ColorLegend } from '../ColorLegend';
+import { ColorLegend2 } from '../ColorLegend2';
 
 const width = 1200;
 const height = 500;
@@ -29,23 +28,21 @@ const countyName = ['臺北縣', '宜蘭縣', '桃園縣', '新竹縣', '苗栗�
 '嘉義市', '臺南市', '臺北市', '高雄市', '連江縣', '金門縣'];
 const county = [];
 for(let i = 1; i <= 25; i++){
-  const name = 'infected_county_' + toString(i);
+  const name = 'infected_county_' + i.toString();
   county.push(name);
 }
 const xValue = d => d.day;
 const xAxisLabel = '天數';
 
-const yValue = d => d.population;
-const yAxisLabel = '受感染人數'; 
+const yAxisLabel = '受感染人數';
 
 export default function CountyChart(props){
   const { data } = props;
-  const [hoveredValue, setHoveredValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState(['臺北市', '臺中市', '高雄市']);
   
   if (!data) {
     return <pre></pre>;
   }
-
   //create nested data
   const nested = county.map((gp, idx)=>{
     const nestValueArr = data.map(d=>{
@@ -57,7 +54,6 @@ export default function CountyChart(props){
     const label = countyName[idx];
     return({'key': label, 'values':nestValueArr});
   })
-
   const xScale =
       scaleLinear()
       .domain(extent(data, xValue))
@@ -71,6 +67,7 @@ export default function CountyChart(props){
     []
   ); 
 
+  const yValue = d => d.population;
   const yScale = scaleLinear()
       .domain(extent(allData, yValue))
       .range([innerHeight, 0])
@@ -87,13 +84,13 @@ export default function CountyChart(props){
   )
 
   //10 colors
-  const colorValue = d => d.key;
   const colorLegendLabel = '縣市別';
 
-  const colorScale = scaleOrdinal(schemeBlues[25]);
+  const colorScale = scaleOrdinal(schemePaired);
   colorScale.domain(nested.map(d => d.key));
 
-  const filteredData = nested.filter(d => hoveredValue === colorValue(d));
+  const filteredData = nested.filter(d => selectedValue.includes(d.key));
+
   const circleRadius = 7;
 
   const lineGenerator = line()
@@ -142,30 +139,20 @@ export default function CountyChart(props){
           <text x={35} y={-25} className="axis-label" textAnchor="middle">
             {colorLegendLabel}
           </text>
-          <ColorLegend
+          <ColorLegend2
               tickSpacing={22}
               tickTextOffset={12}
               tickSize={circleRadius}
               colorScale={colorScale}
-              onHover={setHoveredValue}
-              hoveredValue={hoveredValue}
+              onClickEvent={setSelectedValue}
+              selectedValue={selectedValue}
               fadeOpacity={fadeOpacity}
               />
         </g>
-        <g opacity={hoveredValue ? fadeOpacity : 1}>
-        {nested.map(gp => {
+        {filteredData && filteredData.map(gp => {
           return (
             <path 
-              key={gp.key}
-              fill="none"
-              stroke={colorScale(gp.key)}
-              d={lineGenerator(gp.values)} />
-          );
-        })}
-        </g>
-        {filteredData.map(gp => {
-          return (
-            <path 
+              className='stroke-line'
               key={gp.key}
               fill="none"
               stroke={colorScale(gp.key)}

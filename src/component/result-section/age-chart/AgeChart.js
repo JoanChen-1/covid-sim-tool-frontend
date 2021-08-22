@@ -163,6 +163,7 @@ export default function AgeChart(props){
         {nested.map(gp => {
           return (
             <path 
+              className="stroke-line"
               key={gp.key}
               fill="none"
               stroke={colorScale(gp.key)}
@@ -173,6 +174,7 @@ export default function AgeChart(props){
         {filteredData.map(gp => {
           return (
             <path 
+              className="stroke-line"
               key={gp.key}
               fill="none"
               stroke={colorScale(gp.key)}

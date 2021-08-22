@@ -52,7 +52,7 @@ export default function ResultSection(props) {
                     </Box>
                     <SymChart data={data}/>
                     <DiseaseStatusChart data={data} diseaseRatios={diseaseRatios}/>
-                    <CountyChart />
+                    <CountyChart data={data}/>
                 </div>
             </div>
         </Fragment>

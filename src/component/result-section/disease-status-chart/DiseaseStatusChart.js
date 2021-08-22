@@ -208,6 +208,7 @@ export default function DiseaseStatusChart(props){
           return (
             <path 
               key={gp.key}
+              className="stroke-line"
               fill="none"
               stroke={colorScale(gp.key)}
               d={lineGenerator(gp.values)} />
@@ -218,6 +219,7 @@ export default function DiseaseStatusChart(props){
           return (
             <path 
               key={gp.key}
+              className="stroke-line"
               fill="none"
               stroke={colorScale(gp.key)}
               d={lineGenerator(gp.values)} />

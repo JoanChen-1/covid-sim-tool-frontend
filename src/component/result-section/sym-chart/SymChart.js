@@ -197,6 +197,7 @@ console.log("nested: ", nested);
           return (
             <path 
               key={gp.key}
+              className="stroke-line"
               fill="none"
               stroke={colorScale(gp.key)}
               d={lineGenerator(gp.values)} />
@@ -207,6 +208,7 @@ console.log("nested: ", nested);
           return (
             <path 
               key={gp.key}
+              className="stroke-line"
               fill="none"
               stroke={colorScale(gp.key)}
               d={lineGenerator(gp.values)} />
