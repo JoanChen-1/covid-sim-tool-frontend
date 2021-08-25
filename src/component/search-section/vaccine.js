@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, Switch, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@material-ui/core';
+import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) =>({
     root: {
@@ -29,41 +30,7 @@ const useStyles = makeStyles((theme) =>({
         width: "32px",
         height: "32px",
         transform: "translateX(0px)",
-      },
-    title:{
-        textAlign: 'center',
-        fontWeight: 'bold',
-        gutterBottom: true,
-        fontSize: theme.typography.h3.fontSize
-    },
-    widerOption: {
-        width: 1000
-    },
-    narrowerOption: {
-        width: 200
-    },
-    wrapper: {
-        position: "relative",
-        backgroundColor: theme.palette.common.white,
-        paddingBottom: theme.spacing(2),
-        paddingTop: theme.spacing(2),
-    },
-    container: {
-        marginRight: theme.spacing(20),
-        marginLeft: theme.spacing(20),
-        marginTop: theme.spacing(5),
-        marginBottom: theme.spacing(5)
-    },
-    extraLargeButtonLabel: {
-        fontSize: theme.typography.h4.fontSize
-    },
-    extraLargeButton: {
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(2),
-        margin: 'auto',
-        borderRadius: "5em",
-        minWidth: 600
-    }
+      }
   }));
 
 export default function Vaccine(props){
@@ -97,7 +64,7 @@ export default function Vaccine(props){
     };
 
     return(
-        <div className={classes.widerOption}>
+        <>
             <Typography id="discrete-slider" variant='h5' gutterBottom >
                 疫苗施打
             </Typography>
@@ -122,37 +89,39 @@ export default function Vaccine(props){
                     <Grid item>On</Grid>
                 </Grid>
             </Typography>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <FormControl component="fieldset">
-                    <FormLabel component="legend">疫苗廠牌</FormLabel>
-                    <RadioGroup aria-label="vaccine-brand" name="vaccine-brand" value={brand} onChange={handleVaccineBrand}>
-                        <FormControlLabel disabled={!vaccine} value="A" control={<Radio />} label="AZ：間隔週數8週" />
-                        <FormControlLabel disabled={!vaccine} value="B" control={<Radio />} label="莫德納：間隔週數8週" />
-                    </RadioGroup>
-                    </FormControl>
+            <Collapse in={vaccine}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <FormControl component="fieldset">
+                        <FormLabel component="legend">疫苗廠牌</FormLabel>
+                        <RadioGroup aria-label="vaccine-brand" name="vaccine-brand" value={brand} onChange={handleVaccineBrand}>
+                            <FormControlLabel disabled={!vaccine} value="A" control={<Radio />} label="AZ：間隔週數8週" />
+                            <FormControlLabel disabled={!vaccine} value="B" control={<Radio />} label="莫德納：間隔週數8週" />
+                        </RadioGroup>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <FormControl component="fieldset">
+                        <FormLabel component="legend">疫苗施打總量</FormLabel>
+                        <RadioGroup row aria-label="vaccine-dose" name="vaccine-dose" value={dose} onChange={handleVaccineDose}>
+                            <FormControlLabel disabled={!vaccine} value="10M" control={<Radio />} label="1000萬劑" />
+                            <FormControlLabel disabled={!vaccine} value="20M" control={<Radio />} label="2000萬劑" />
+                            <FormControlLabel disabled={!vaccine} value="30M" control={<Radio />} label="3000萬劑" />
+                            <FormControlLabel disabled={!vaccine} value="40M" control={<Radio />} label="4000萬劑" />
+                        </RadioGroup>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <FormControl component="fieldset">
+                        <FormLabel component="legend">疫苗施打方式</FormLabel>
+                        <RadioGroup row aria-label="vaccine-strategy" name="vaccine-strategy" value={strategy} onChange={handleVaccineStrategy}>
+                            <FormControlLabel disabled={!vaccine} value="1" control={<Radio />} label="每天施打十萬劑疫苗" />
+                            <FormControlLabel disabled={!vaccine} value="2" control={<Radio />} label="每天施打二十萬劑疫苗" />
+                        </RadioGroup>
+                        </FormControl>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <FormControl component="fieldset">
-                    <FormLabel component="legend">疫苗施打總量</FormLabel>
-                    <RadioGroup row aria-label="vaccine-dose" name="vaccine-dose" value={dose} onChange={handleVaccineDose}>
-                        <FormControlLabel disabled={!vaccine} value="10M" control={<Radio />} label="1000萬劑" />
-                        <FormControlLabel disabled={!vaccine} value="20M" control={<Radio />} label="2000萬劑" />
-                        <FormControlLabel disabled={!vaccine} value="30M" control={<Radio />} label="3000萬劑" />
-                        <FormControlLabel disabled={!vaccine} value="40M" control={<Radio />} label="4000萬劑" />
-                    </RadioGroup>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                    <FormControl component="fieldset">
-                    <FormLabel component="legend">疫苗施打方式</FormLabel>
-                    <RadioGroup row aria-label="vaccine-strategy" name="vaccine-strategy" value={strategy} onChange={handleVaccineStrategy}>
-                        <FormControlLabel disabled={!vaccine} value="1" control={<Radio />} label="每天施打十萬劑疫苗" />
-                        <FormControlLabel disabled={!vaccine} value="2" control={<Radio />} label="每天施打二十萬劑疫苗" />
-                    </RadioGroup>
-                    </FormControl>
-                </Grid>
-            </Grid>
-        </div>
+            </Collapse>
+        </>
     )
 }

@@ -29,7 +29,7 @@ export default function SymChart(props){
     return <pre></pre>;
   }
 
-  const title = '每日有症狀及無症狀感染者人數'
+  const title = '每日新增有症狀及無症狀感染者人數'
 
   const symGp = [
     'sym_case_0',

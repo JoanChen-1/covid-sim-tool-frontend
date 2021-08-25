@@ -29,7 +29,7 @@ export default function DiseaseStatusChart(props){
     return <pre></pre>;
   }
 
-  const title = '每日重症、住院、死亡人數'
+  const title = '每日新增重症、住院、死亡人數'
 
   const infectGp = [
     'infected_case_0',

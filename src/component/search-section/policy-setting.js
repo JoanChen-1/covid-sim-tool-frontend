@@ -52,7 +52,7 @@ export default function PolicySetting (props){
             <Typography className={classes.title} gutterBottom>
                 政策相關設定
             </Typography>
-            <Grid container flexGrow={1} spacing={2}>
+            <Grid container spacing={2}>
                 <Grid item xs={4}>
                     <div className={classes.narrowerOption}>
                         <Typography variant='h5' gutterBottom >

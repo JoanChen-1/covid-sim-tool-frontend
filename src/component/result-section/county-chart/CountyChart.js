@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react';//useMemo, useRef
 import { 
   line,
   scaleLinear,
@@ -12,6 +12,7 @@ import {
 import { AxisBottom } from '../AxisBottom';
 import { AxisLeft } from '../AxisLeft';
 import { ColorLegend2 } from '../ColorLegend2';
+// import { useD3Zoom } from '../useD3Zoom';
 
 const width = 1200;
 const height = 500;
@@ -21,7 +22,7 @@ const yAxisLabelOffset = 60;
 const fadeOpacity = 0.2;
 const innerHeight = height - margin.top - margin.bottom;
 const innerWidth = width - margin.left - margin.right;
-const title = '各縣市每日受感染人數'
+const title = '各縣市每日新增受感染人數'
 const countyName = ['臺北縣', '宜蘭縣', '桃園縣', '新竹縣', '苗栗縣', 
 '臺中縣', '彰化縣','南投縣', '雲林縣', '嘉義縣', '臺南縣', '高雄縣',
 '屏東縣', '臺東縣', '花蓮縣', '澎湖縣', '基隆市', '新竹市', '臺中市',
@@ -38,6 +39,8 @@ const yAxisLabel = '受感染人數';
 
 export default function CountyChart(props){
   const { data } = props;
+  // const svgInteractionRef = useRef();
+  // const zoomProps = useD3Zoom({ ref: svgInteractionRef });
   const [selectedValue, setSelectedValue] = useState(['臺北市', '臺中市', '高雄市']);
   
   if (!data) {
@@ -98,6 +101,19 @@ export default function CountyChart(props){
     .y(d => yScale(yValue(d)))
     .curve(curveLinear);
 
+  // const xScaleShow = () => {
+  //   if (!xScale) return;
+  //   return zoomProps.rescaleX ? zoomProps.rescaleX(xScale) : xScale.copy();
+  // };
+
+  // const yScaleShow = () => {
+  //   if (!yScale) return;
+  //   return zoomProps.rescaleY ? zoomProps.rescaleY(yScale) : yScale.copy();
+  // };
+
+  // const xShow = xScaleShow(xScale.invert(x));
+  // const yShow = yScaleShow(yScale.invert(y));
+
   return (
     <svg width={width} height={height}>
         <text
@@ -140,25 +156,29 @@ export default function CountyChart(props){
             {colorLegendLabel}
           </text>
           <ColorLegend2
-              tickSpacing={22}
-              tickTextOffset={12}
-              tickSize={circleRadius}
-              colorScale={colorScale}
-              onClickEvent={setSelectedValue}
-              selectedValue={selectedValue}
-              fadeOpacity={fadeOpacity}
-              />
+            tickSpacing={22}
+            tickTextOffset={12}
+            tickSize={circleRadius}
+            colorScale={colorScale}
+            onClickEvent={setSelectedValue}
+            selectedValue={selectedValue}
+            fadeOpacity={fadeOpacity}
+          />
         </g>
-        {filteredData && filteredData.map(gp => {
-          return (
-            <path 
-              className='stroke-line'
-              key={gp.key}
-              fill="none"
-              stroke={colorScale(gp.key)}
-              d={lineGenerator(gp.values)} />
-          );
-        })}
+        {/* <svg ref={svgInteractionRef}>
+          <g transform={`translate(${zoomProps.x}, ${zoomProps.y}) scale(${zoomProps.k})`}> */}
+            {filteredData && filteredData.map(gp => {
+              return (
+                <path 
+                  className='stroke-line'
+                  key={gp.key}
+                  fill="none"
+                  stroke={colorScale(gp.key)}
+                  d={lineGenerator(gp.values)} />
+              );
+            })}
+          {/* </g>
+        </svg> */}
       </g>
     </svg>
   );
