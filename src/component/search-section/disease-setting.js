@@ -102,7 +102,7 @@ export default function DiseaseSetting (props){
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
-                            <Typography variant='h5' gutterBottom >
+                            <Typography variant='h5'>
                                 各年齡層重症率<br/>
                             </Typography>
                         </AccordionSummary>
@@ -122,7 +122,7 @@ export default function DiseaseSetting (props){
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
-                            <Typography variant='h5' gutterBottom >
+                            <Typography variant='h5'>
                                 各年齡層住院率<br/>
                             </Typography>
                         </AccordionSummary>
@@ -142,7 +142,7 @@ export default function DiseaseSetting (props){
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
-                            <Typography variant='h5' gutterBottom >
+                            <Typography variant='h5'>
                                 各年齡層死亡率<br/>
                             </Typography>
                         </AccordionSummary>
