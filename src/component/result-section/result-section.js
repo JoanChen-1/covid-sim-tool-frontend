@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography , Box } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import AgeChart from './age-chart/AgeChart';
+import AgePercentChart from './age-percent-chart/AgePercentChart';
 import SymChart from './sym-chart/SymChart';
 import DiseaseStatusChart from './disease-status-chart/DiseaseStatusChart';
 import CountyChart from './county-chart/CountyChart'
@@ -43,13 +44,8 @@ export default function ResultSection(props) {
                     <Typography className={classes.title} gutterBottom>
                         模擬結果
                     </Typography>
-                    <Box 
-                        display="flex" 
-                        alignItems="center"
-                        justifyContent="center"
-                    >
-                        <AgeChart data={data}/>
-                    </Box>
+                    <AgeChart data={data}/>
+                    <AgePercentChart data={data}/>
                     <SymChart data={data}/>
                     <DiseaseStatusChart data={data} diseaseRatios={diseaseRatios}/>
                     <CountyChart data={data}/>

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { toPng } from 'html-to-image';
-import { Button, Grid, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@material-ui/core';
+import { Button, Grid, Radio, RadioGroup, FormControlLabel, FormControl } from '@material-ui/core';
 
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { 
@@ -27,10 +27,10 @@ const innerHeight = height - margin.top - margin.bottom;
 const innerWidth = width - margin.left - margin.right;
 const ageGpName10 = ['0 - 9 歲', '10 - 19 歲', '20 - 29 歲', '30 - 39 歲',
 '40 - 49 歲', '50 - 59 歲', '60 - 69 歲', '70 - 79 歲','80 - 89 歲', '90 - 99 歲'];
-const ageGpName5 = ['0 - 19 歲', '20 - 39 歲','40 - 59 歲', '60 - 79 歲','80 - 99 歲'];
-const ageGpName3 = ['0 - 19 歲', '20 - 79 歲','80 - 99 歲'];
+const ageGpName5 = ['0 - 19 歲', '20 - 39 歲', '40 - 59 歲', '60 - 79 歲', '80 - 99 歲'];
+const ageGpName3 = ['0 - 19 歲', '20 - 79 歲', '80 - 99 歲'];
 
-export default function AgeChart(props){
+export default function AgePercentChart(props){
   const { data } = props;
   const ref = useRef(null);
   const [ageGpMethod, setAgeGpMethod] = useState("10");
@@ -41,11 +41,12 @@ export default function AgeChart(props){
   };
 
   if (!data) {
-    return <pre>調整完下方條件後，按下「開始模擬」，即可看到模擬結果喔！</pre>;
+    return <pre></pre>;
   }
-    const title = '各年齡層每日新增受感染人數'
+  const agePop = [2215796, 2206973, 3113964, 3547831, 3738425, 5331668, 3029294, 1406613, 674952, 136391];
+  const title = '各年齡層受感染數佔各年齡層的百分比';
 
-    const infectGp = [
+  const infectGp = [
     'infected_case_0',
     'infected_case_1',
     'infected_case_2',
@@ -55,70 +56,68 @@ export default function AgeChart(props){
     'infected_case_6',
     'infected_case_7',
     'infected_case_8',
-    'infected_case_9',
-    ]
+    'infected_case_9'
+  ];
 
-    let nested=[];
-    //create nested data: 10 age groups
-    if (ageGpMethod === '10'){
-        nested = infectGp.map((gp, idx)=>{
-        const nestValueArr = data.map(d=>{
-            const nestValue = {}
-            nestValue['day'] = d.day;
-            nestValue['population'] = d[gp];
-            return nestValue;
-        })
-        const label = ageGpName10[idx];
-        return({'key': label, 'values':nestValueArr});
-        })
+  let nested=[];
+  //create nested data: 10 age groups
+  if (ageGpMethod === '10'){
+    nested = infectGp.map((gp, idx)=>{
+      const nestValueArr = data.map(d=>{
+        const nestValue = {}
+        nestValue['day'] = d.day;
+        nestValue['population'] = (d[gp] / agePop[idx]) * 100;
+        return nestValue;
+      })
+      const label = ageGpName10[idx];
+      return({'key': label, 'values':nestValueArr});
+    })
+  }
+
+  //create nested data: 5 age groups
+  if (ageGpMethod === '5'){
+      infectGp.forEach((gp, idx)=>{
+          if (idx % 2 === 0){
+              const nestValueArr = data.map(d=>{
+                  const nestValue = {}
+                  nestValue['day'] = d.day;
+                  //merge two agegroup into one
+                  const infectPop = d[infectGp[idx]] + d[infectGp[idx + 1]];
+                  const totalPop = agePop[idx] + agePop[idx + 1];
+                  //caluculate the percentage
+                  nestValue['population'] = (infectPop / totalPop) * 100;
+                  return nestValue;
+              })
+              //[0, 2, 4, 6, 8]/2 = [0, 1, 2, 3, 4]
+              const label = ageGpName5[idx / 2];
+              nested.push({'key': label, 'values':nestValueArr});
+          }
+      })
+  }
+
+  const ageLayers = [0, 2, 8, 10];
+  //create nested data: 3 age groups
+  if (ageGpMethod === '3'){
+    //0-19yr, 20-79yr, 80-99yr
+    for(let i = 0; i < (ageLayers.length - 1); i++){
+      //iterating each day's info
+      const nestValueArr = data.map(d=>{
+        //for each day, calculate infected pop and total pop in the age group
+        const nestValue = {};
+        nestValue['day'] = d.day;
+        let infectPop = 0; //total infected cases in the age group
+        let totalPop = 0; //total population in the age group
+        for(let j = ageLayers[i]; j < ageLayers[i + 1]; j++){
+          infectPop += d[infectGp[j]];
+          totalPop += agePop[j];
+        }
+        nestValue['population'] = (infectPop / totalPop) * 100;
+        return nestValue;
+      })
+      nested.push({'key': ageGpName3[i], 'values': nestValueArr});
     }
-
-    //create nested data: 5 age groups
-    if (ageGpMethod === '5'){
-        infectGp.forEach((gp, idx)=>{
-            if (idx % 2 === 0){
-                const nestValueArr = data.map(d=>{
-                    const nestValue = {}
-                    nestValue['day'] = d.day;
-                    nestValue['population'] = d[infectGp[idx]] + d[infectGp[idx+1]];
-                    return nestValue;
-                })
-                const label = ageGpName5[idx/2];
-                nested.push({'key': label, 'values':nestValueArr});
-            }
-        })
-    }
-
-    //create nested data: 3 age groups
-    if (ageGpMethod === '3'){
-        let nestValueArr = data.map(d=>{
-            const nestValue = {}
-            nestValue['day'] = d.day;
-            nestValue['population'] = d['infected_case_0'] + d['infected_case_1'];
-            return nestValue;
-        })
-        nested.push({'key': ageGpName3[0], 'values':nestValueArr});
-
-        nestValueArr = data.map(d=>{
-            const nestValue = {}
-            nestValue['day'] = d.day;
-            nestValue['population'] = d['infected_case_2'] + d['infected_case_3'] + d['infected_case_4']
-             + d['infected_case_5'] + d['infected_case_6'] + d['infected_case_7'];
-            return nestValue;
-        })
-        nested.push({'key': ageGpName3[1], 'values':nestValueArr});
-
-        nestValueArr = data.map(d=>{
-            const nestValue = {}
-            nestValue['day'] = d.day;
-            nestValue['population'] = d['infected_case_8'] + d['infected_case_9'];
-            return nestValue;
-        })
-        nested.push({'key': ageGpName3[2], 'values':nestValueArr});
-
-    }
-
-
+  }
+  console.log("nesdted: ", nested);
   
   const xValue = d => d.day;
   const xAxisLabel = '天數';
@@ -137,7 +136,7 @@ export default function AgeChart(props){
   );
 
   const yValue = d => d.population;
-  const yAxisLabel = '人數';  
+  const yAxisLabel = '百分比(%)';  
 
   const yScale = scaleLinear()
       .domain(extent(allData, yValue))
@@ -262,7 +261,7 @@ export default function AgeChart(props){
             })}
           </g>
         </svg>
-      </div> 
+      </div>  
       <Grid 
         container   
         justify="center"
@@ -288,7 +287,7 @@ export default function AgeChart(props){
             下載圖表
           </Button>
         </Grid>
-      </Grid>   
+      </Grid>  
     </>
   );
 };

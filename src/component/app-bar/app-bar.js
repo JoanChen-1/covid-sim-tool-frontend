@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     AppBar,
     Toolbar,
-    Typography    
+    Typography,
+    Box  
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -43,19 +46,30 @@ const useStyles = makeStyles((theme) => ({
   }));
 export default function NavBar() {
     const classes = useStyles();
-
+    const [version, setVersion] = useState(10);
+    
+    const handleChange = (event) => {
+      console.log("version value: ", event.target.value);
+      setVersion(event.target.value);
+    };
     return (
         <AppBar position="sticky" className={classes.appBar}>
             <Toolbar className={classes.appBarToolbar}>
-                <div>
-                    <Typography 
-                        variant="h4" 
-                        align='center'
-                        className={classes.title}
-                    >
-                        台灣Covid-19疾病模擬系統
-                    </Typography>
-                </div>
+                <Typography 
+                    variant="h5" 
+                    align='center'
+                    className={classes.title}
+                >
+                    台灣Covid-19疾病模擬系統
+                </Typography>
+                <Select
+                  value={version}
+                  onChange={handleChange}
+                  label="Version"
+                >
+                  <MenuItem value={10}>Version 1.0</MenuItem>
+                  <MenuItem value={20}>Version 1.1</MenuItem>
+                </Select>
             </Toolbar>
         </AppBar>
     )

@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { toPng } from 'html-to-image';
+import { Button, Grid } from '@material-ui/core';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import { 
   line,
   scaleLinear,
@@ -22,6 +25,7 @@ const innerHeight = height - margin.top - margin.bottom;
 const innerWidth = width - margin.left - margin.right;
 
 export default function SymChart(props){
+  const ref = useRef(null);
   const { data } = props;
   const [hoveredValue, setHoveredValue] = useState(null);
 
@@ -145,76 +149,107 @@ console.log("nested: ", nested);
     .y(d => yScale(yValue(d)))
     .curve(curveLinear);
 
+  const onButtonClick = () => {
+    if (ref.current === null) {
+      return
+    }
+    toPng(ref.current, { cacheBust: true, })
+      .then((dataUrl) => {
+        const link = document.createElement('a')
+        link.download = 'covid-sim-age.png'
+        link.href = dataUrl
+        link.click()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   return (
-    <svg width={width} height={height}>
-        <text
-          className="axis-title-label"
-          x={width / 2}
-          y={50}
-          textAnchor="middle"
+    <>
+      <div ref={ref}>
+        <svg width={width} height={height}>
+            <text
+              className="axis-title-label"
+              x={width / 2}
+              y={50}
+              textAnchor="middle"
+            >
+              {title}
+            </text>
+          <g transform={`translate(${margin.left},${margin.top})`}>
+            <AxisBottom
+              xScale={xScale}
+              innerHeight={innerHeight}
+              tickOffset={7}
+            />
+            <text
+              className="axis-label"
+              textAnchor="middle"
+              transform={`translate(${-yAxisLabelOffset},${innerHeight /
+                2}) rotate(-90)`}
+            >
+              {yAxisLabel}
+            </text>
+            <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={7} />
+            <text
+              className="axis-label"
+              x={innerWidth / 2}
+              y={innerHeight + xAxisLabelOffset}
+              textAnchor="middle"
+            >
+              {xAxisLabel}
+            </text>
+            <g transform={`translate(${innerWidth + 60}, 60)`}>
+              <text x={35} y={-25} className="axis-label" textAnchor="middle">
+                {colorLegendLabel}
+              </text>
+              <ColorLegend
+                  tickSpacing={22}
+                  tickTextOffset={12}
+                  tickSize={circleRadius}
+                  colorScale={colorScale}
+                  onHover={setHoveredValue}
+                  hoveredValue={hoveredValue}
+                  fadeOpacity={fadeOpacity}
+                  />
+            </g>
+            <g opacity={hoveredValue ? fadeOpacity : 1}>
+            {nested.map(gp => {
+              return (
+                <path 
+                  key={gp.key}
+                  className="stroke-line"
+                  fill="none"
+                  stroke={colorScale(gp.key)}
+                  d={lineGenerator(gp.values)} />
+              );
+            })}
+            </g>
+            {filteredData.map(gp => {
+              return (
+                <path 
+                  key={gp.key}
+                  className="stroke-line"
+                  fill="none"
+                  stroke={colorScale(gp.key)}
+                  d={lineGenerator(gp.values)} />
+              );
+            })}
+          </g>
+        </svg>
+      </div> 
+      <Grid container justify="flex-end">
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={onButtonClick}
+          // className={classes.button}
+          startIcon={<GetAppIcon />}
         >
-          {title}
-        </text>
-      <g transform={`translate(${margin.left},${margin.top})`}>
-        <AxisBottom
-          xScale={xScale}
-          innerHeight={innerHeight}
-          tickOffset={7}
-        />
-        <text
-          className="axis-label"
-          textAnchor="middle"
-          transform={`translate(${-yAxisLabelOffset},${innerHeight /
-            2}) rotate(-90)`}
-        >
-          {yAxisLabel}
-        </text>
-        <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={7} />
-        <text
-          className="axis-label"
-          x={innerWidth / 2}
-          y={innerHeight + xAxisLabelOffset}
-          textAnchor="middle"
-        >
-          {xAxisLabel}
-        </text>
-        <g transform={`translate(${innerWidth + 60}, 60)`}>
-          <text x={35} y={-25} className="axis-label" textAnchor="middle">
-            {colorLegendLabel}
-          </text>
-          <ColorLegend
-              tickSpacing={22}
-              tickTextOffset={12}
-              tickSize={circleRadius}
-              colorScale={colorScale}
-              onHover={setHoveredValue}
-              hoveredValue={hoveredValue}
-              fadeOpacity={fadeOpacity}
-              />
-        </g>
-        <g opacity={hoveredValue ? fadeOpacity : 1}>
-        {nested.map(gp => {
-          return (
-            <path 
-              key={gp.key}
-              className="stroke-line"
-              fill="none"
-              stroke={colorScale(gp.key)}
-              d={lineGenerator(gp.values)} />
-          );
-        })}
-        </g>
-        {filteredData.map(gp => {
-          return (
-            <path 
-              key={gp.key}
-              className="stroke-line"
-              fill="none"
-              stroke={colorScale(gp.key)}
-              d={lineGenerator(gp.values)} />
-          );
-        })}
-      </g>
-    </svg>
+          下載圖表
+        </Button>
+      </Grid>    
+    </>
   );
 };

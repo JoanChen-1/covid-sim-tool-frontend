@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import './App.css';
-import { CssBaseline, Divider } from "@material-ui/core";
+import { CssBaseline, Divider, Typography } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 
 import NavBar from './component/app-bar/app-bar';
@@ -16,15 +16,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'center',
   },
-  appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '100vh',
+    height: '89vh',
     overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
   }
 }));
 
@@ -32,6 +27,7 @@ export default function App() {
   const classes = useStyles();
   const [data, setData] = useState(null);
   const [diseaseRatios, setDiseaseRatios] = useState(null);
+  const [setting, setSetting] = useState([]);
   const onClick = (r, mask, distance, wash, isVaccine, vaccineBrand, vaccineDose, vaccineStrategy, ratios) =>{
     console.log(r, mask, distance, wash, isVaccine, vaccineBrand, vaccineDose, vaccineStrategy);
     getData(r, mask, distance, wash, isVaccine, vaccineBrand, vaccineDose, vaccineStrategy)
@@ -50,13 +46,12 @@ export default function App() {
       <CssBaseline />
       <NavBar />
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
         <HeadSection />
         <Divider variant='middle'/>
         <SearchSection onClick={onClick}/>
         <Divider variant='middle'/>
         <ResultSection data={data} diseaseRatios={diseaseRatios}/>
-      <Footer />
+        <Footer />
       </main>
     </div>
   );

@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) =>({
         gutterBottom: true,
         fontSize: theme.typography.h3.fontSize
     },
-    widerOption: {
-        width: 1000,
+    narrowerOption: {
+        width: 200,
     },
     settingContainer: {
         marginTop: theme.spacing(5),
@@ -76,19 +76,21 @@ export default function DiseaseSetting (props){
                         </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                        <Slider
-                            aria-labelledby="slider-r"
-                            valueLabelDisplay="auto"
-                            step={1}
-                            marks={r0_marks}
-                            min={3}
-                            max={6}
-                            defaultValue={3}
-                            onChangeCommitted={handleR}
-                        />
+                        <div className={classes.narrowerOption}>
+                            <Slider
+                                aria-labelledby="slider-r"
+                                valueLabelDisplay="auto"
+                                step={1}
+                                marks={r0_marks}
+                                min={3}
+                                max={6}
+                                defaultValue={3}
+                                onChangeCommitted={handleR}
+                            />
+                        </div>
                     </Grid>
-                    <Grid item xs={9}>
-                        <Typography variant='h6' gutterBottom>
+                    <Grid item xs={12}>
+                        <Typography gutterBottom>
                             病毒基本再生數，指1個感染到某種傳染病的人，會把疾病傳染給其他多少個人的平均數。
                         </Typography>
                     </Grid>

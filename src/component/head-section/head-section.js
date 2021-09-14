@@ -18,10 +18,6 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(5),
       marginBottom: theme.spacing(5)
   },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
   steplabel:{
     fontSize: theme.typography.h6.fontSize
   },

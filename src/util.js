@@ -1,3 +1,4 @@
+const base_url = 'http://127.0.0.1:8888/'
 
 export const getData = async (r, mask, distance, wash, isVaccine, vaccineBrand, vaccineDose, vaccineStrategy) => {
     let table_name = `1by20-r${r.toString()}-mask${mask.toString()}-dist${distance.toString()}-wash${wash.toString()}`
@@ -8,7 +9,7 @@ export const getData = async (r, mask, distance, wash, isVaccine, vaccineBrand, 
         table_name = table_name + '-vaccoff'
     }
 
-    const endpoint = 'http://127.0.0.1:8080/covid-sim-tool?table_name=' + table_name;
+    const endpoint = 'http://127.0.0.1:8888/covid-sim-tool?table_name=' + table_name;
     console.log("finding data...: ", endpoint);
 
     try{

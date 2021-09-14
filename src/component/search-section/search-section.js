@@ -184,7 +184,7 @@ export default function SearchSection(props){
                         startIcon={<PlayCircleFilledWhiteIcon />}
                         onClick={handleClick}
                     >
-                        開始模擬
+                        新增模擬
                     </Button>  
                 </Box>
             </div>
