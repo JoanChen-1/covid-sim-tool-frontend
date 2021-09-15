@@ -13,12 +13,13 @@ covidSimRouter.get("/", asyncHandler(async (req, res, next) => {
     let command = `SELECT * FROM \"${req.query.table_name}\" ORDER BY day ASC`;
 
     const results = await db.query(command, []).catch((err) => {
+        console.log(err)
         throw new DatabaseError("Something Went Wrong", err);
     });
 
-    if (results.rows.length <= 0) {
-        throw new DatabaseError("Something Went Wrong");
-    }
+    // if (results.rows.length <= 0) {
+    //     throw new DatabaseError("Something Went Wrong");
+    // }
 
     // let column_wise_json = {};
 

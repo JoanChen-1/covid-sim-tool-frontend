@@ -43,6 +43,9 @@ export default function AgeChart(props){
   if (!data) {
     return <pre>調整完下方條件後，按下「開始模擬」，即可看到模擬結果喔！</pre>;
   }
+  else if(data.length <= 0){
+    return <pre>此設定尚未有資料</pre>
+  }
     const title = '各年齡層每日新增受感染人數'
 
     const infectGp = [
