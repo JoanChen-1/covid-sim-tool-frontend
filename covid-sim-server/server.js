@@ -18,11 +18,11 @@ app.use(express.urlencoded({ extended: false }));
 // logger
 app.use(morgan("dev"));
 
+app.use(express.static(path.join(__dirname, "..", "build")));
+
 // distribution router
 const distributionRouter = require("./controllers/distribution-router");
 app.use("/covid-sim-tool", distributionRouter);
-
-app.use(express.static(path.join(__dirname, "..", "build")));
 
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "..", "build", "index.html"));

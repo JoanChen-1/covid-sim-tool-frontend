@@ -9,7 +9,7 @@ export const getData = async (r, mask, distance, wash, isVaccine, vaccineBrand, 
         table_name = table_name + '-vaccoff'
     }
 
-    const endpoint = 'http://127.0.0.1:8888/covid-sim-tool?table_name=' + table_name;
+    const endpoint = '/covid-sim-tool?table_name=' + table_name;
     console.log("finding data...: ", endpoint);
 
     try{
