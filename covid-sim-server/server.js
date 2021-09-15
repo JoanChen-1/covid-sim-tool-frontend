@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const app = express();
 const PORT = process.env.PORT || 8888;
 const path = require('path');
+const compression = require('compression');
 
 // allowing CORS
 const cors = require("cors");
@@ -17,6 +18,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // logger
 app.use(morgan("dev"));
+
+app.use(compression());
 
 app.use(express.static(path.join(__dirname, "..", "build")));
 
