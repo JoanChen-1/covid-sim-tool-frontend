@@ -95,8 +95,8 @@ export default function Vaccine(props){
                         <FormControl component="fieldset">
                         <FormLabel component="legend">疫苗廠牌</FormLabel>
                         <RadioGroup aria-label="vaccine-brand" name="vaccine-brand" value={brand} onChange={handleVaccineBrand}>
-                            <FormControlLabel disabled={!vaccine} value="A" control={<Radio />} label="AZ：間隔週數8週" />
-                            <FormControlLabel disabled={!vaccine} value="B" control={<Radio />} label="莫德納：間隔週數8週" />
+                            <FormControlLabel disabled={!vaccine} value="AZ" control={<Radio />} label="AZ：間隔週數8週" />
+                            <FormControlLabel disabled={!vaccine} value="Mod" control={<Radio />} label="莫德納：間隔週數8週" />
                         </RadioGroup>
                         </FormControl>
                     </Grid>
@@ -115,8 +115,8 @@ export default function Vaccine(props){
                         <FormControl component="fieldset">
                         <FormLabel component="legend">疫苗施打方式</FormLabel>
                         <RadioGroup row aria-label="vaccine-strategy" name="vaccine-strategy" value={strategy} onChange={handleVaccineStrategy}>
-                            <FormControlLabel disabled={!vaccine} value="1" control={<Radio />} label="每天施打十萬劑疫苗" />
-                            <FormControlLabel disabled={!vaccine} value="2" control={<Radio />} label="每天施打二十萬劑疫苗" />
+                            <FormControlLabel disabled={!vaccine} value="P10" control={<Radio />} label="每天施打十萬劑疫苗" />
+                            <FormControlLabel disabled={!vaccine} value="P20" control={<Radio />} label="每天施打二十萬劑疫苗" />
                         </RadioGroup>
                         </FormControl>
                     </Grid>
