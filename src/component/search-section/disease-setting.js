@@ -45,8 +45,8 @@ const useStyles = makeStyles((theme) =>({
           label: '6'
       },
       {
-        value: 6,
-        label: '6'
+        value: 7,
+        label: '7'
       },
     ];
 export default function DiseaseSetting (props){

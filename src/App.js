@@ -31,8 +31,10 @@ export default function App() {
     console.log(r, mask, distance, wash, isVaccine, vaccineBrand, vaccineDose, vaccineStrategy);
     getData(r, mask, distance, wash, isVaccine, vaccineBrand, vaccineDose, vaccineStrategy)
     .then(response=>{
+      console.log("data: ", response['data']);
       if(response === 'failed'){
         console.log("failed");
+        setData([]);
       }
       else{
         setDiseaseRatios(ratios);
