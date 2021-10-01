@@ -129,7 +129,7 @@ export default function SymChart(props){
   const maxYIndex = maxIndex(allData, yValue) % data.length;
 
   const maxYValue = d =>
-    yValue(d.values[maxYIndex - 1]);
+    yValue(d.values[maxYIndex]);
 
   nested.sort((a, b) =>
   descending(maxYValue(a), maxYValue(b))

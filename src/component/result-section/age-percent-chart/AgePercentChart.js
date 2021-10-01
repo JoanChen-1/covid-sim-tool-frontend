@@ -150,7 +150,7 @@ export default function AgePercentChart(props){
   const maxYIndex = maxIndex(allData, yValue) % data.length;
 
   const lastYValue = d =>
-    yValue(d.values[maxYIndex - 1]);
+    yValue(d.values[maxYIndex]);
 
   nested.sort((a, b) =>
   descending(lastYValue(a), lastYValue(b))
