@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { toPng } from 'html-to-image';
-import { Button, Grid, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@material-ui/core';
+import { Button, Grid, Radio, RadioGroup, FormControlLabel, FormControl } from '@material-ui/core';
 
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { 

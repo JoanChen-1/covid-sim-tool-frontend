@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) =>({
           value: 6,
           label: '6'
       },
+      {
+        value: 6,
+        label: '6'
+      },
     ];
 export default function DiseaseSetting (props){
     const { 
@@ -83,7 +87,7 @@ export default function DiseaseSetting (props){
                                 step={1}
                                 marks={r0_marks}
                                 min={3}
-                                max={6}
+                                max={7}
                                 defaultValue={3}
                                 onChangeCommitted={handleR}
                             />

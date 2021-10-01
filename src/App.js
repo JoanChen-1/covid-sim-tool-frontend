@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import './App.css';
-import { CssBaseline, Divider, Typography } from "@material-ui/core";
+import { CssBaseline, Divider } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 
 import NavBar from './component/app-bar/app-bar';
@@ -27,7 +27,6 @@ export default function App() {
   const classes = useStyles();
   const [data, setData] = useState(null);
   const [diseaseRatios, setDiseaseRatios] = useState(null);
-  const [setting, setSetting] = useState([]);
   const onClick = (r, mask, distance, wash, isVaccine, vaccineBrand, vaccineDose, vaccineStrategy, ratios) =>{
     console.log(r, mask, distance, wash, isVaccine, vaccineBrand, vaccineDose, vaccineStrategy);
     getData(r, mask, distance, wash, isVaccine, vaccineBrand, vaccineDose, vaccineStrategy)
