@@ -1,7 +1,7 @@
 // const base_url = 'http://127.0.0.1:8888'
 
 export const getData = async (r, mask, distance, wash, isVaccine, vaccineBrand, vaccineDose, vaccineStrategy) => {
-    let table_name = `1by20-r${r.toString()}-mask${mask.toString()}-dist${distance.toString()}-wash${wash.toString()}`
+    let table_name = `1by20-r${r.toString()}-mask${mask.toString()}-wash${wash.toString()}-dist${distance.toString()}`
     if(isVaccine){
         table_name = `${table_name}-vaccon-${vaccineBrand}-${vaccineStrategy}-${vaccineDose}` 
     }
