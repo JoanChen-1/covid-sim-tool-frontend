@@ -43,6 +43,9 @@ export default function AgePercentChart(props){
   if (!data) {
     return <pre></pre>;
   }
+  else if(data.length <= 0){
+    return <pre></pre>
+  }
   const agePop = [2215796, 2206973, 3113964, 3547831, 3738425, 5331668, 3029294, 1406613, 674952, 136391];
   const title = '各年齡層受感染數佔各年齡層的百分比';
 
@@ -108,7 +111,7 @@ export default function AgePercentChart(props){
         let infectPop = 0; //total infected cases in the age group
         let totalPop = 0; //total population in the age group
         for(let j = ageLayers[i]; j < ageLayers[i + 1]; j++){
-          infectPop += d[infectGp[j]];
+          infectPop += Math.floor(d[infectGp[j]]);
           totalPop += agePop[j];
         }
         nestValue['population'] = (infectPop / totalPop) * 100;
@@ -117,7 +120,7 @@ export default function AgePercentChart(props){
       nested.push({'key': ageGpName3[i], 'values': nestValueArr});
     }
   }
-  console.log("nesdted: ", nested);
+  console.log("AgePercentChart: ", nested);
   
   const xValue = d => d.day;
   const xAxisLabel = '天數';

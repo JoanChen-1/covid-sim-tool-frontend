@@ -68,7 +68,7 @@ export default function AgeChart(props){
         const nestValueArr = data.map(d=>{
             const nestValue = {}
             nestValue['day'] = d.day;
-            nestValue['population'] = d[gp];
+            nestValue['population'] = Math.floor(d[gp]);
             return nestValue;
         })
         const label = ageGpName10[idx];
@@ -83,7 +83,7 @@ export default function AgeChart(props){
                 const nestValueArr = data.map(d=>{
                     const nestValue = {}
                     nestValue['day'] = d.day;
-                    nestValue['population'] = d[infectGp[idx]] + d[infectGp[idx+1]];
+                    nestValue['population'] = Math.floor(d[infectGp[idx]]) + Math.floor(d[infectGp[idx+1]]);
                     return nestValue;
                 })
                 const label = ageGpName5[idx/2];
@@ -97,7 +97,7 @@ export default function AgeChart(props){
         let nestValueArr = data.map(d=>{
             const nestValue = {}
             nestValue['day'] = d.day;
-            nestValue['population'] = d['infected_case_0'] + d['infected_case_1'];
+            nestValue['population'] = Math.floor(d['infected_case_0']) + Math.floor(d['infected_case_1']);
             return nestValue;
         })
         nested.push({'key': ageGpName3[0], 'values':nestValueArr});
@@ -105,8 +105,8 @@ export default function AgeChart(props){
         nestValueArr = data.map(d=>{
             const nestValue = {}
             nestValue['day'] = d.day;
-            nestValue['population'] = d['infected_case_2'] + d['infected_case_3'] + d['infected_case_4']
-             + d['infected_case_5'] + d['infected_case_6'] + d['infected_case_7'];
+            nestValue['population'] = Math.floor(d['infected_case_2']) + Math.floor(d['infected_case_3']) + Math.floor(d['infected_case_4'])
+             + Math.floor(d['infected_case_5']) + Math.floor(d['infected_case_6']) + Math.floor(d['infected_case_7']);
             return nestValue;
         })
         nested.push({'key': ageGpName3[1], 'values':nestValueArr});
@@ -114,14 +114,14 @@ export default function AgeChart(props){
         nestValueArr = data.map(d=>{
             const nestValue = {}
             nestValue['day'] = d.day;
-            nestValue['population'] = d['infected_case_8'] + d['infected_case_9'];
+            nestValue['population'] = Math.floor(d['infected_case_8']) + Math.floor(d['infected_case_9']);
             return nestValue;
         })
         nested.push({'key': ageGpName3[2], 'values':nestValueArr});
 
     }
 
-
+    console.log("AgeChart: ", nested);
   
   const xValue = d => d.day;
   const xAxisLabel = '天數';

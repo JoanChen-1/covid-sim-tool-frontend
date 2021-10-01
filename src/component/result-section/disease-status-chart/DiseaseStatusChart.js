@@ -32,6 +32,9 @@ export default function DiseaseStatusChart(props){
   if (!data) {
     return <pre></pre>;
   }
+  else if(data.length <= 0){
+    return <pre></pre>
+  }
 
   const title = '每日新增重症、住院、死亡人數'
 
@@ -75,7 +78,7 @@ export default function DiseaseStatusChart(props){
     let icuDailyTotal = 0;
     const nestValue = {}
     infectGp.forEach((gp, idx)=>{
-      icuDailyTotal = icuDailyTotal + d[gp]*icu[idx];     
+      icuDailyTotal = icuDailyTotal + Math.floor(d[gp])*icu[idx];     
     })
     nestValue['day'] = d.day;
     nestValue['population'] = Math.round(icuDailyTotal/100);
@@ -88,7 +91,7 @@ export default function DiseaseStatusChart(props){
     let hospitalDailyTotal = 0;
     const nestValue = {}
     infectGp.forEach((gp, idx)=>{
-      hospitalDailyTotal = hospitalDailyTotal + d[gp]*hospital[idx];     
+      hospitalDailyTotal = hospitalDailyTotal + Math.floor(d[gp])*hospital[idx];     
     })
     nestValue['day'] = d.day;
     nestValue['population'] = Math.round(hospitalDailyTotal/100);
@@ -101,7 +104,7 @@ export default function DiseaseStatusChart(props){
     let fatalityDailyTotal = 0;
     const nestValue = {}
     infectGp.forEach((gp, idx)=>{
-      fatalityDailyTotal = fatalityDailyTotal + d[gp]*fatality[idx];     
+      fatalityDailyTotal = fatalityDailyTotal + Math.floor(d[gp])*fatality[idx];     
     })
     nestValue['day'] = d.day;
     nestValue['population'] = Math.round(fatalityDailyTotal/100);

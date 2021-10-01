@@ -42,9 +42,9 @@ export default function Vaccine(props){
         handleVaccineStrategyChange} = props;
 
     const [vaccine, setVaccine] = useState(false);
-    const [brand, setBrand] = useState('A');
-    const [strategy, setStrategy] = useState('1');
-    const [dose, setDose] = useState('10M');
+    const [brand, setBrand] = useState("AZ");
+    const [strategy, setStrategy] = useState("P10");
+    const [dose, setDose] = useState("10M");
 
     const handleVaccineBrand = (e, value) => {
         setBrand(value);

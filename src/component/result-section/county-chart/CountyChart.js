@@ -50,17 +50,23 @@ export default function CountyChart(props){
   if (!data) {
     return <pre></pre>;
   }
+  else if(data.length <= 0){
+    return <pre></pre>
+  }
   //create nested data
   const nested = county.map((gp, idx)=>{
     const nestValueArr = data.map(d=>{
       const nestValue = {}
       nestValue['day'] = d.day;
-      nestValue['population'] = d[gp];
+      nestValue['population'] = Math.floor(d[gp]);
       return nestValue;
     })
     const label = countyName[idx];
     return({'key': label, 'values':nestValueArr});
   })
+
+  console.log("CountyChart: ", nested);
+
   const xScale =
       scaleLinear()
       .domain(extent(data, xValue))

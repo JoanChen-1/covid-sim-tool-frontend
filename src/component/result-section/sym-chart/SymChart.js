@@ -32,6 +32,9 @@ export default function SymChart(props){
   if (!data) {
     return <pre></pre>;
   }
+  else if(data.length <= 0){
+    return <pre></pre>
+  }
 
   const title = '每日新增有症狀及無症狀感染者人數'
 
@@ -70,7 +73,7 @@ export default function SymChart(props){
       symDailyTotal = symDailyTotal + d[gp];     
     })
     nestValue['day'] = d.day;
-    nestValue['population'] = symDailyTotal;
+    nestValue['population'] = Math.floor(symDailyTotal);
     return nestValue;
   })
   nested.push({key: '有症狀人數', values: symArr});
@@ -84,7 +87,7 @@ export default function SymChart(props){
       asymDailyTotal = asymDailyTotal + d[gp];     
     })
     nestValue['day'] = d.day;
-    nestValue['population'] = asymDailyTotal;
+    nestValue['population'] = Math.floor(asymDailyTotal);
     return nestValue;
   })
   nested.push({key: '無症狀人數', values: asymArr});
@@ -92,12 +95,13 @@ export default function SymChart(props){
   const totalArr = symArr.map((d, idx)=>{
     const nestValue = {};
     nestValue['day'] = d.day;
-    nestValue['population'] = d.population + asymArr[idx].population; 
+    nestValue['population'] = Math.floor(d.population) + Math.floor(asymArr[idx].population); 
     return nestValue;
   })
   nested.push({key: '受感染總人數', values: totalArr});
   
-console.log("nested: ", nested);
+  console.log("SymChart: ", nested);
+
   const xValue = d => d.day;
   const xAxisLabel = '天數';
   
